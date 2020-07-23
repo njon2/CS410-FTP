@@ -1,7 +1,10 @@
 package com.company;
 
+
+import org.apache.commons.net.ftp.FTPClient;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+
 import java.io.IOException;
 
 /*
@@ -16,10 +19,15 @@ public class MainTest {
     @Test
     public void testStartConnection() {
         boolean isConnected = true;
-        Client ftpClient = new Client();
+//Client ftpClient = new Client();
 
+//Server connection
         try {
-            ftpClient.startConnection("ftp://speedtest.tele2.net", "anonymous", "anonymous");
+            FTPClient ftpClient = new FTPClient(); // Client ftpClient = new Client();
+            ftpClient.connect("speedtest.tele2.net");
+            ftpClient.login("anonymous", "anonymous");
+            //ftpClient.startConnection("ftp://speedtest.tele2.net", "anonymous", "anonymous");
+            System.out.println("Correct Server: Pass");
         } catch (IOException e) {
             System.out.print(e.getMessage());
             isConnected = false;
