@@ -7,8 +7,10 @@ and interact with a server.
 package com.company;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import java.io.IOException;
+import java.util.Collection;
 
 public class Client {
 
@@ -19,20 +21,30 @@ public class Client {
     private FTPClient apacheFTPClient;
 
     /* Connect to a server or throw an exception if the connection fails */
-    public void startConnection(String hostname, String username, String password) throws IOException {
+    public void startConnection(String hostname) throws IOException {
         apacheFTPClient = new FTPClient();
-        port = 22;
         server_address = hostname;
-        user = username;
-        pass = password;
 
-        apacheFTPClient.connect(hostname, port);
-        apacheFTPClient.login(username, password);
+        apacheFTPClient.connect(hostname);
 
         int reply = apacheFTPClient.getReplyCode();
         if(!FTPReply.isPositiveCompletion(reply)){
             apacheFTPClient.disconnect();
+            apacheFTPClient = null;
             throw new IOException("Negative reply from FTP server, aborting, id was " + reply);
+        }
+    }
+
+    /* Login to a connected server */
+    public void login(String username, String password) throws IOException{
+        apacheFTPClient.login(username, password);
+    }
+
+    /* Print the name of every file in the directory */
+    public void list() throws IOException{
+        FTPFile[] files = apacheFTPClient.listFiles();
+        for(FTPFile file : files){
+            System.out.println(file.getName());
         }
     }
 }
