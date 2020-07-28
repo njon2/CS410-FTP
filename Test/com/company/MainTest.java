@@ -19,15 +19,10 @@ public class MainTest {
     @Test
     public void testStartConnection() {
         boolean isConnected = true;
-//Client ftpClient = new Client();
+        Client ftpClient = new Client();
 
-//Server connection
         try {
-            FTPClient ftpClient = new FTPClient(); // Client ftpClient = new Client();
-            ftpClient.connect("speedtest.tele2.net");
-            ftpClient.login("anonymous", "anonymous");
-            //ftpClient.startConnection("ftp://speedtest.tele2.net", "anonymous", "anonymous");
-            System.out.println("Correct Server: Pass");
+            ftpClient.startConnection("speedtest.tele2.net");
         } catch (IOException e) {
             System.out.print(e.getMessage());
             isConnected = false;
@@ -42,6 +37,6 @@ public class MainTest {
         Client ftpClient = new Client();
 
         Assertions.assertThrows(IOException.class, () ->
-                ftpClient.startConnection("", "", ""));
+                ftpClient.startConnection(""));
     }
 }
