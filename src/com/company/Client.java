@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 public class Client {
-
+    private boolean loggedIn;
     private int port;
     private String server_address;
     private String user;
@@ -38,6 +38,7 @@ public class Client {
     /* Login to a connected server */
     public void login(String username, String password) throws IOException{
         apacheFTPClient.login(username, password);
+        loggedIn = true;
     }
 
     /* Print the name of every file in the directory */
@@ -46,5 +47,18 @@ public class Client {
         for(FTPFile file : files){
             System.out.println(file.getName());
         }
+    }
+
+    public boolean logoff(){
+        if(loggedIn) {
+            try {
+                apacheFTPClient.logout();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            loggedIn = false;
+            return true;
+        }
+        return false;
     }
 }

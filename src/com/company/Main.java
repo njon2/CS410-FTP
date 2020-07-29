@@ -50,6 +50,10 @@ public class Main {
         do{
             input = reader.readLine();
             if(input.equals("ls")) ftpClient.list();
+            if(input.equals("logoff"))
+                ftpClient.logoff();
+            if(input.equals("login"))
+                ftpClient.login(username, password);
         }while(!input.equals("exit"));
     }
 }
