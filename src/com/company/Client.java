@@ -67,28 +67,14 @@ public class Client {
         return false;
     }
 
+    /*retrieves a file from the remote server and downloads to C:/Users/Default/Downloads*/
     public boolean get(String filePath) throws IOException {
 
         apacheFTPClient.enterLocalPassiveMode();
         apacheFTPClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-        /*String remoteFile1 = "1KB.zip";
-        File downloadFile1 = new File("C:/Users/Benja/Downloads/1KB.zip");
-        OutputStream outputStream1 = new BufferedOutputStream(new FileOutputStream(downloadFile1));
-        boolean success = apacheFTPClient.retrieveFile(remoteFile1, outputStream1);
-        outputStream1.close();
-
-        if (success) {
-            System.out.println("File #1 has been downloaded successfully.");
-        }*/
-
-        apacheFTPClient.setFileType(FTP.BINARY_FILE_TYPE);
-       //File toGet = new File(filePath);
-        File downloadFile = new File("C:/Users/Benja/Downloads/" + filePath);
-
-        //FileOutputStream fos = new FileOutputStream(filePath);
+        File downloadFile = new File("C:/Users/Default/Downloads/" + filePath);
         OutputStream outStream = new BufferedOutputStream(new FileOutputStream(downloadFile));
-        //FileOutputStream fileOutputStream = new FileOutputStream(filePath);
         boolean success = apacheFTPClient.retrieveFile('/' + filePath, outStream);
 
         outStream.close();
