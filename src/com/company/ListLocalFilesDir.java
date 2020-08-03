@@ -1,7 +1,6 @@
 package com.company;
 
 import org.apache.commons.net.ftp.FTPClient;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -13,6 +12,15 @@ public class ListLocalFilesDir {
 
         if (list == null) {
             System.out.println("Directory does not exist");
+            dir = new File("/Users/Omar/Desktop/Testing");
+            list = dir.listFiles();
+            System.out.println(dir);
+            for (File file : list) {
+                if (file.isFile())
+                    System.out.println("File is " + file.getName());
+                else if (file.isDirectory())
+                    System.out.println("Directory is " + file.getName());
+            }
         }
     }
 }
