@@ -7,12 +7,11 @@ import java.io.IOException;
 public class ListLocalFilesDir {
     public static void main(String[] args) {
         File dir;
-        dir = new File("test");
+        dir = new File("asdfa");
         File[] list = dir.listFiles();
-
         if (list == null) {
             System.out.println("Directory does not exist");
-            dir = new File("/Users/Omar/Desktop/Testing");
+            dir = new File("/tmp");
             list = dir.listFiles();
             System.out.println(dir);
             for (File file : list) {
