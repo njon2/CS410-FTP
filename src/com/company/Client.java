@@ -7,13 +7,12 @@ and interact with a server.
 package com.company;
 
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPSClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTP;
 
 import java.io.*;
-import java.io.IOException;
+import java.util.Collection;
 
 public class Client {
     private boolean loggedIn;
@@ -23,12 +22,8 @@ public class Client {
     private String pass;
     private FTPClient apacheFTPClient;
 
-    public Client() throws IOException {
-    }
-
     /* Connect to a server or throw an exception if the connection fails */
     public void startConnection(String hostname) throws IOException {
-        //apacheFTPClient = new FTPClient();
         apacheFTPClient = new FTPClient();
         server_address = hostname;
 
@@ -44,61 +39,25 @@ public class Client {
 
     /* Login to a connected server */
     public void login(String username, String password) throws IOException {
-
-        try {
-            if (!apacheFTPClient.login(username, password)) {
-                apacheFTPClient.logout();
-                apacheFTPClient.disconnect();
-                System.out.println("Login Error");
-            } else {
-                loggedIn = true;
-                System.out.println("Login successfull.\nYou are now connected.");
-            }
-        } catch (IOException e) {
-            loggedIn = false;
-            System.out.println("Unable to connect to server");
-        }
-
-        /*
         apacheFTPClient.login(username, password);
         loggedIn = true;
-         */
     }
 
     /* Print the name of every file in the directory */
     public void list() throws IOException {
-        FTPFile[] files;
-        try {
-            files = apacheFTPClient.listFiles();
-            if (files != null && files.length > 0) {
-                for (FTPFile file : files) {
-                    if (file.isFile()) {
-                        System.out.println("File is " + file.getName());
-                    } else if (file.isDirectory()) {
-                        System.out.println("Directory is " + file.getName());
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        /*
+        System.out.println("Reading file names: ");
         FTPFile[] files = apacheFTPClient.listFiles();
+        System.out.println("Starting printing file names: ");
         for (FTPFile file : files) {
-            System.out.println(file.getName());
+            System.out.println("File :" + file.getName());
         }
-         */
     }
-
 
     public boolean logoff() {
         if (loggedIn) {
             try {
-                apacheFTPClient.logout();
-                apacheFTPClient.disconnect();
-                System.out.println("Logout successful.");
+                return apacheFTPClient.logout();
             } catch (IOException e) {
-                System.out.println("Something went wrong.");
                 e.printStackTrace();
             }
             loggedIn = false;
@@ -107,13 +66,18 @@ public class Client {
         return false;
     }
 
+    public void enterLocalPassiveMode() {
+        apacheFTPClient.enterLocalPassiveMode();
+    }
+
     /*retrieves a file from the remote server and downloads to C:/Users/Default/Downloads*/
     public boolean get(String filePath) throws IOException {
 
-        apacheFTPClient.enterLocalPassiveMode();
+        //apacheFTPClient.enterLocalPassiveMode();
         apacheFTPClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-        File downloadFile = new File("C:/Users/Default/Downloads/" + filePath);
+        //File downloadFile = new File("C/Users/Omar/Desktop/Testing" + filePath);
+        File downloadFile = new File("C:/Users/Omar/Desktop/Testing/" + filePath);
         OutputStream outStream = new BufferedOutputStream(new FileOutputStream(downloadFile));
         boolean success = apacheFTPClient.retrieveFile('/' + filePath, outStream);
 
@@ -129,14 +93,12 @@ public class Client {
 
     }
 
-    public void ListLocalFilesDir() {
-        File dir;
-        dir = new File("/Users/Omar/Desktop/Testing");//This can directly be called in line 10 //first occurence, can be removed
+    public File[] readFiles(String directory) {
+        File dir = new File(directory);
         File[] list = dir.listFiles();
         if (list == null) {
             System.out.println("Directory does not exist");
         } else {
-            //list = dir.listFiles();
             System.out.println(dir);
             for (File file : list) {
                 if (file.isFile())
@@ -145,6 +107,6 @@ public class Client {
                     System.out.println("Directory is " + file.getName());
             }
         }
+        return list;
     }
 }
-
