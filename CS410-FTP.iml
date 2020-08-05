@@ -36,5 +36,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="MockFtpServer-2.7.1-javadoc" level="project" />
+    <orderEntry type="library" name="jsch" level="project" />
   </component>
 </module>
