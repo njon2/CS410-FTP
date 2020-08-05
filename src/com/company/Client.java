@@ -106,7 +106,7 @@ public class Client {
             boolean success = apacheFTPClient.storeFile(remote, isStream);
             isStream.close();
             if (success) {
-                System.out.println(localPath + "uploaded successfully\n");
+                System.out.println(localPath + " uploaded successfully\n");
                 return true;
             }
 

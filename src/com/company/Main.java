@@ -59,6 +59,15 @@ public class Main {
                 String toGet = reader.readLine();
                 ftpClient.get(toGet);
             }
+            if(input.equals("put"))
+            {
+                System.out.println("Enter the name of the file to upload: ");
+                String toPut = reader.readLine();
+                System.out.println("What would you like to call " + toPut + " on remote?");
+                String remoteName = reader.readLine();
+                ftpClient.put(toPut, remoteName);
+            }
+
         }while(!input.equals("exit"));
     }
 }
