@@ -54,6 +54,11 @@ public class Main {
                 ftpClient.logoff();
             if(input.equals("login"))
                 ftpClient.login(username, password);
+            if(input.equals("get")) {
+                System.out.println("Enter the file to get: ");
+                String toGet = reader.readLine();
+                ftpClient.get(toGet);
+            }
         }while(!input.equals("exit"));
     }
 }
