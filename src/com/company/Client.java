@@ -109,4 +109,22 @@ public class Client {
         }
         return list;
     }
+
+    public void ListLocalFilesDir() {
+        File dir;
+        dir = new File("/Users/Omar/Desktop/Testing");
+        File[] list = dir.listFiles();
+        if (list == null) {
+            System.out.println("Directory does not exist");
+        } else {
+            //list = dir.listFiles();
+            System.out.println(dir);
+            for (File file : list) {
+                if (file.isFile())
+                    System.out.println("File is " + file.getName());
+                else if (file.isDirectory())
+                    System.out.println("Directory is " + file.getName());
+            }
+        }
+    }
 }

@@ -55,11 +55,13 @@ public class Main {
         }
 
         /* Loop for input until user decides to exit */
-        System.out.println("Enter option: ");
+        //System.out.println("Enter option: ");
         do {
             System.out.println("Enter option: ");
             input = reader.readLine();
             if (input.equals("ls")) ftpClient.list();
+            if (input.equals("local"))
+                ftpClient.ListLocalFilesDir();
             if (input.equals("logoff"))
                 System.out.println(ftpClient.logoff());
             if (input.equals("login"))
