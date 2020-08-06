@@ -56,8 +56,12 @@ public class Client {
     public boolean logoff() {
         if (loggedIn) {
             try {
-                return apacheFTPClient.logout();
+                //return apacheFTPClient.logout();
+                apacheFTPClient.logout();
+                //apacheFTPClient.disconnect();
+                System.out.println("Logout successful.");
             } catch (IOException e) {
+                System.out.println("Something went wrong.");
                 e.printStackTrace();
             }
             loggedIn = false;
@@ -77,7 +81,7 @@ public class Client {
         apacheFTPClient.setFileType(FTP.BINARY_FILE_TYPE);
 
         //File downloadFile = new File("C/Users/Omar/Desktop/Testing" + filePath);
-        File downloadFile = new File("C:/Users/Omar/Desktop/Testing/" + filePath);
+        File downloadFile = new File("/Users/Omar/Desktop/Testing/" + filePath);
         OutputStream outStream = new BufferedOutputStream(new FileOutputStream(downloadFile));
         boolean success = apacheFTPClient.retrieveFile('/' + filePath, outStream);
 
@@ -110,21 +114,19 @@ public class Client {
         return list;
     }
 
-    public void ListLocalFilesDir() {
-        File dir;
-        dir = new File("/Users/Omar/Desktop/Testing");
+    public boolean isFilePresent(String directory, String toGet) {
+        File dir = new File(directory);
         File[] list = dir.listFiles();
         if (list == null) {
             System.out.println("Directory does not exist");
-        } else {
-            //list = dir.listFiles();
-            System.out.println(dir);
-            for (File file : list) {
-                if (file.isFile())
-                    System.out.println("File is " + file.getName());
-                else if (file.isDirectory())
-                    System.out.println("Directory is " + file.getName());
+            return false;
+        }
+        for (File file : list) {
+            if (file.getName().equals(toGet)) {
+                System.out.println(true);
+                return true;
             }
         }
+        return false;
     }
 }

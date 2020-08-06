@@ -27,6 +27,7 @@ public class Main {
         System.out.println("Please enter the FTP Server hostname:");
         hostname = "speedtest.tele2.net";
         System.out.println(hostname); //For testing purposes
+        ftpClient.logoff();
         try {
             //hostname = reader.readLine();
             ftpClient.startConnection(hostname);
@@ -60,8 +61,6 @@ public class Main {
             System.out.println("Enter option: ");
             input = reader.readLine();
             if (input.equals("ls")) ftpClient.list();
-            if (input.equals("local"))
-                ftpClient.ListLocalFilesDir();
             if (input.equals("logoff"))
                 System.out.println(ftpClient.logoff());
             if (input.equals("login"))
@@ -70,13 +69,7 @@ public class Main {
                 System.out.println("Enter the file to get: ");
                 String toGet = reader.readLine();
                 ftpClient.get(toGet);
-                File[] files = ftpClient.readFiles("C:/Users/Omar/Desktop/Testing//");
-                for (File file : files) {
-                    if (file.getName().equals("src")) {
-                        System.out.println(true);
-                        break;
-                    }
-                }
+                System.out.println(ftpClient.isFilePresent("/Users/Omar/Desktop/Testing/", toGet));
             }
         }while(!input.equals("exit"));
     }
