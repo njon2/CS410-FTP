@@ -90,7 +90,7 @@ public class Client {
 
     }
 
-    public boolean put(String localPath, String remoteName) throws IOException {
+    public boolean put(String localPath, String remoteName){
 
         try {
             apacheFTPClient.setFileType(FTP.BINARY_FILE_TYPE); //ASCII_FILE_TYPE); //, FTP BINARY_FILE_TYPE

@@ -53,11 +53,9 @@ public class MainTest {
             Assertions.assertTrue(gotFile); //since the get command always returns false for some reason
         } catch (IOException e) {
             System.out.print(e.getMessage());
-
         }
-
-
     }
+
     @Test
     public void getNonexistentFileTest(){
         Client ftpClient = new Client();
@@ -70,7 +68,6 @@ public class MainTest {
             Assertions.assertFalse(gotFile);
         } catch (IOException e) {
             System.out.print(e.getMessage());
-
         }
     }
 
@@ -86,7 +83,6 @@ public class MainTest {
             Assertions.assertTrue(putFile);
         } catch (IOException e) {
             System.out.print(e.getMessage());
-
         }
     }
 
