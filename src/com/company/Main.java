@@ -48,15 +48,15 @@ public class Main {
         /* Loop for input until user decides to exit */
         do{
             input = reader.readLine();
-            if(input.equals("ls")) ftpClient.list();
+            if(input.equals("ls"))
+                ftpClient.list();
             if(input.equals("logoff"))
                 ftpClient.logoff();
-            if(input.equals("login"))
-                ftpClient.login(username, password);
-            if(input.equals("get"))
+            if(input.equals("get")) {
                 System.out.println("Enter the file to get: ");
                 String toGet = reader.readLine();
                 ftpClient.get(toGet);
-        }while(!input.equals("exit"));
+            }
+        }while(!input.equals("logoff"));
     }
 }
