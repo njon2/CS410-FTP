@@ -50,6 +50,7 @@ public class Main {
         do{
             System.out.println("\nEnter command:");
             input = reader.readLine();
+
             if(input.equals("ls"))
                 ftpClient.list();
             if (input.equals("local")) {
@@ -57,13 +58,13 @@ public class Main {
                 temp = reader.readLine();
                 ftpClient.ListLocalFilesDir(temp);
             }
-            if(input.equals("logoff"))
-                ftpClient.logoff();
             if(input.equals("get")) {
                 System.out.println("Enter the file to get: ");
                 temp = reader.readLine();
                 ftpClient.get(temp);
             }
+            if(input.equals("logoff"))
+                ftpClient.logoff();
         }while(!input.equals("logoff"));
     }
 }

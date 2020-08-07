@@ -16,9 +16,6 @@ import java.io.*;
 public class Client {
     private FTPClient apacheFTPClient;
 
-    public Client() throws IOException {
-    }
-
     /* Connect to a server or throw an exception if the connection fails */
     public void startConnection(String hostname) throws IOException {
         apacheFTPClient = new FTPClient();
