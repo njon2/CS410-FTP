@@ -47,6 +47,7 @@ public class Main {
 
         /* Loop for input until user decides to exit */
         do{
+            System.out.println("Enter command: \n");
             input = reader.readLine();
             if(input.equals("ls"))
                 ftpClient.list();

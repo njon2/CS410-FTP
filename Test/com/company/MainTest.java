@@ -45,13 +45,13 @@ public class MainTest {
     public void getExistentFileTest() throws IOException
     {
         Client ftpClient = new Client();
-        boolean gotFile = true;
+        boolean gotFile;
 
         try {
             ftpClient.startConnection("speedtest.tele2.net");
             ftpClient.login("anonymous", "anonymous");
             gotFile = ftpClient.get("1KB.zip"); //check the program directory to ensure that the file was downloaded
-            Assertions.assertEquals(true, gotFile); //since the get command always returns false for some reason
+            Assertions.assertTrue(gotFile); //since the get command always returns false for some reason
         } catch (IOException e) {
             System.out.print(e.getMessage());
 
@@ -62,13 +62,13 @@ public class MainTest {
     @Test
     public void getNonexistentFileTest() throws IOException {
         Client ftpClient = new Client();
-        boolean gotFile = true;
+        boolean gotFile;
 
         try {
             ftpClient.startConnection("speedtest.tele2.net");
             ftpClient.login("anonymous", "anonymous");
             gotFile = ftpClient.get("10KB.zip"); //The file will still be created, but it will be empty since the download failed
-            Assertions.assertEquals(false, gotFile);
+            Assertions.assertFalse(gotFile);
         } catch (IOException e) {
             System.out.print(e.getMessage());
 

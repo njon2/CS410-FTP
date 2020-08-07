@@ -14,9 +14,6 @@ import org.apache.commons.net.ftp.FTP;
 import java.io.*;
 
 public class Client {
-    private boolean loggedIn;
-    private int port;
-    private String server_address;
     private FTPClient apacheFTPClient;
 
     public Client() throws IOException {
@@ -25,8 +22,6 @@ public class Client {
     /* Connect to a server or throw an exception if the connection fails */
     public void startConnection(String hostname) throws IOException {
         apacheFTPClient = new FTPClient();
-        server_address = hostname;
-
         apacheFTPClient.connect(hostname);
 
         int reply = apacheFTPClient.getReplyCode();
@@ -40,7 +35,6 @@ public class Client {
     /* Login to a connected server */
     public void login(String username, String password) throws IOException {
         apacheFTPClient.login(username, password);
-        loggedIn = true;
     }
 
     /* Print the name of every file in the directory */
@@ -51,17 +45,13 @@ public class Client {
         }
     }
 
-    public boolean logoff() {
-        if (loggedIn) {
-            try {
-                apacheFTPClient.logout();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            loggedIn = false;
-            return true;
+    /* Log off of client and exit program */
+    public void logoff() {
+        try {
+            apacheFTPClient.logout();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return false;
     }
 
     /*retrieves a file from the remote server and downloads to C:/Users/Default/Downloads*/
@@ -86,4 +76,3 @@ public class Client {
 
     }
 }
-
