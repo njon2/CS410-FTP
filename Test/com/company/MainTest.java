@@ -5,6 +5,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import javax.swing.event.CaretListener;
 import java.io.IOException;
 
 /*
@@ -72,5 +73,21 @@ public class MainTest {
             System.out.print(e.getMessage());
 
         }
+    }
+
+    @Test
+    public void testLogoff() throws IOException {
+        Client ftpClient = new Client();
+        boolean logoff = true;
+
+        try {
+            ftpClient.startConnection("speedtest.tele2.net");
+            ftpClient.login("anonymous", "anonymous");
+            ftpClient.logoff();
+        } catch (IOException e) {
+            System.out.print(e.getMessage());
+            logoff = false;
+        }
+        Assertions.assertTrue(logoff);
     }
 }
