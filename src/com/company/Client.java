@@ -75,4 +75,20 @@ public class Client {
         return false;
 
     }
+
+    public void ListLocalFilesDir(String filePath) {
+        File dir = new File(filePath);
+        File[] list = dir.listFiles();
+        if (list == null) {
+            System.out.println("Directory does not exist");
+        } else {
+            System.out.println(dir);
+            for (File file : list) {
+                if (file.isFile())
+                    System.out.println(file.getName());
+                else if (file.isDirectory())
+                    System.out.println(file.getName());
+            }
+        }
+    }
 }
