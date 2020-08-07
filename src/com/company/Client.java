@@ -42,12 +42,29 @@ public class Client {
         }
     }
 
+
     /* Log off of client and exit program */
     public void logoff() {
         try {
             apacheFTPClient.logout();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void ListLocalFilesDir(String filePath) {
+        File dir = new File(filePath);
+        File[] list = dir.listFiles();
+        if (list == null) {
+            System.out.println("Directory does not exist");
+        } else {
+            System.out.println(dir);
+            for (File file : list) {
+                if (file.isFile())
+                    System.out.println(file.getName());
+                else if (file.isDirectory())
+                    System.out.println(file.getName());
+            }
         }
     }
 
@@ -73,19 +90,34 @@ public class Client {
 
     }
 
-    public void ListLocalFilesDir(String filePath) {
-        File dir = new File(filePath);
-        File[] list = dir.listFiles();
-        if (list == null) {
-            System.out.println("Directory does not exist");
-        } else {
-            System.out.println(dir);
-            for (File file : list) {
-                if (file.isFile())
-                    System.out.println(file.getName());
-                else if (file.isDirectory())
-                    System.out.println(file.getName());
+    public boolean put(String localPath, String remoteName) throws IOException {
+
+        try {
+            apacheFTPClient.setFileType(FTP.BINARY_FILE_TYPE); //ASCII_FILE_TYPE); //, FTP BINARY_FILE_TYPE
+            //apacheFTPClient.setFileTransferMode(FTP.BINARY_FILE_TYPE);
+            apacheFTPClient.enterLocalPassiveMode();
+
+            // APPROACH #1: uploads first file using an InputStream
+            File localFile = new File(localPath);
+
+            //String firstRemoteFile = "upload/test.zip";
+            InputStream isStream = new FileInputStream(localFile);
+
+            String remote =  "upload/" + remoteName;
+            boolean success = apacheFTPClient.storeFile(remote, isStream);
+            isStream.close();
+            if (success) {
+                System.out.println(localPath + " uploaded successfully\n");
+                return true;
             }
+
+            System.out.println("Error uploading " + localPath + "\n");
+            return false;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
+
 }

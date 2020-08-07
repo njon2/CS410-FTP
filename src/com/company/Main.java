@@ -1,5 +1,7 @@
 package com.company;
 
+import org.apache.commons.net.ftp.FTP;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -62,6 +64,14 @@ public class Main {
                 System.out.println("Enter the file to get: ");
                 temp = reader.readLine();
                 ftpClient.get(temp);
+            }
+            if(input.equals("put"))
+            {
+                System.out.println("Enter the name of the file to upload: ");
+                String toPut = reader.readLine();
+                System.out.println("What would you like to call " + toPut + " on remote?");
+                String remoteName = reader.readLine();
+                ftpClient.put(toPut, remoteName);
             }
             if(input.equals("logoff"))
                 ftpClient.logoff();
