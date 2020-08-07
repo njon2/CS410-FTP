@@ -5,6 +5,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import javax.swing.event.CaretListener;
 import java.io.IOException;
 
 /*
@@ -17,7 +18,7 @@ public class MainTest {
 
     /* Assert client can connect to a test server */
     @Test
-    public void testStartConnection() {
+    public void testStartConnection(){
         boolean isConnected = true;
         Client ftpClient = new Client();
 
@@ -33,7 +34,7 @@ public class MainTest {
 
     /* Assert passing null parameters throws an exception */
     @Test
-    public void testNullStartConnection() {
+    public void testNullStartConnection(){
         Client ftpClient = new Client();
 
         Assertions.assertThrows(IOException.class, () ->
@@ -41,52 +42,47 @@ public class MainTest {
     }
 
     @Test
-    public void getExistentFileTest() throws IOException
-    {
+    public void getExistentFileTest(){
         Client ftpClient = new Client();
-        boolean gotFile = true;
+        boolean gotFile;
 
         try {
             ftpClient.startConnection("speedtest.tele2.net");
             ftpClient.login("anonymous", "anonymous");
             gotFile = ftpClient.get("1KB.zip"); //check the program directory to ensure that the file was downloaded
-            Assertions.assertEquals(true, gotFile); //since the get command always returns false for some reason
+            Assertions.assertTrue(gotFile); //since the get command always returns false for some reason
         } catch (IOException e) {
             System.out.print(e.getMessage());
-
         }
-
-
     }
+
     @Test
-    public void getNonexistentFileTest() throws IOException {
+    public void getNonexistentFileTest(){
         Client ftpClient = new Client();
-        boolean gotFile = true;
+        boolean gotFile;
 
         try {
             ftpClient.startConnection("speedtest.tele2.net");
             ftpClient.login("anonymous", "anonymous");
             gotFile = ftpClient.get("10KB.zip"); //The file will still be created, but it will be empty since the download failed
-            Assertions.assertEquals(false, gotFile);
+            Assertions.assertFalse(gotFile);
         } catch (IOException e) {
             System.out.print(e.getMessage());
-
         }
     }
 
     @Test
-    public void putExistentFileTest() throws IOException {
+    public void putExistentFileTest(){
         Client ftpClient = new Client();
-        boolean putFile = true;
+        boolean putFile;
 
         try {
             ftpClient.startConnection("speedtest.tele2.net");
             ftpClient.login("anonymous", "anonymous");
             putFile = ftpClient.put("test.txt", "temp.txt"); //The file will still be created, but it will be empty since the download failed
-            Assertions.assertEquals(true, putFile);
+            Assertions.assertTrue(putFile);
         } catch (IOException e) {
             System.out.print(e.getMessage());
-
         }
     }
 

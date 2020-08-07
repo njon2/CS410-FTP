@@ -5,6 +5,7 @@ import org.apache.commons.net.ftp.FTP;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class Main {
 
@@ -20,6 +21,7 @@ public class Main {
         String username;
         String password;
         String input;
+        String temp;
 
         //Get the hostname
         System.out.println("Please enter the FTP Server hostname:");
@@ -48,16 +50,20 @@ public class Main {
 
         /* Loop for input until user decides to exit */
         do{
+            System.out.println("\nEnter command:");
             input = reader.readLine();
-            if(input.equals("ls")) ftpClient.list();
-            if(input.equals("logoff"))
-                ftpClient.logoff();
-            if(input.equals("login"))
-                ftpClient.login(username, password);
+
+            if(input.equals("ls"))
+                ftpClient.list();
+            if (input.equals("local")) {
+                System.out.println("Enter filepath:");
+                temp = reader.readLine();
+                ftpClient.ListLocalFilesDir(temp);
+            }
             if(input.equals("get")) {
                 System.out.println("Enter the file to get: ");
-                String toGet = reader.readLine();
-                ftpClient.get(toGet);
+                temp = reader.readLine();
+                ftpClient.get(temp);
             }
             if(input.equals("put"))
             {
@@ -67,7 +73,8 @@ public class Main {
                 String remoteName = reader.readLine();
                 ftpClient.put(toPut, remoteName);
             }
-
-        }while(!input.equals("exit"));
+            if(input.equals("logoff"))
+                ftpClient.logoff();
+        }while(!input.equals("logoff"));
     }
 }
